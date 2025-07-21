@@ -1,0 +1,811 @@
+<?xml version="1.0"?>
+<robot name="dual_vx300s">
+  <material name="interbotix_black">
+    <texture
+      filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/interbotix_black.png" />
+  </material>
+  <!-- Define a world link -->
+  <link name="world" />
+
+  <!-- ************************* -->
+  <!-- ******   ARM 1   ****** -->
+  <!-- ************************* -->
+
+  <link name="arm1_base_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_1_base.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_1_base.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="-0.0534774 -0.000562575 0.0205961" />
+      <mass value="0.969034" />
+      <inertia ixx="0.006024" iyy="0.0017" izz="0.007162" ixy="0.00004713" ixz="0.000003851"
+        iyz="-0.00008415" />
+    </inertial>
+  </link>
+  <link name="arm1_shoulder_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="0 0 -0.003" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_2_shoulder.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="0 0 -0.003" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_2_shoulder.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.000259233 -0.0000033552 0.0116129" />
+      <mass value="0.798614" />
+      <inertia ixx="0.0009388" iyy="0.001138" izz="0.001201" ixy="-0.000000001" ixz="-0.0000000191"
+        iyz="0.0000059568" />
+    </inertial>
+  </link>
+  <link name="arm1_upper_arm_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_3_upper_arm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_3_upper_arm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.0206949 0.0000000004 0.226459" />
+      <mass value="0.792592" />
+      <inertia ixx="0.008925" iyy="0.008937" izz="0.0009357" ixy="0" ixz="0" iyz="0.001201" />
+    </inertial>
+  </link>
+  <link name="arm1_upper_forearm_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_4_upper_forearm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_4_upper_forearm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.105723 0 0" />
+      <mass value="0.322228" />
+      <inertia ixx="0.0001524" ixy="-0.00001883" ixz="-0.0000084064" iyy="0.001342"
+        iyz="0.0000012564" izz="0.001441" />
+    </inertial>
+  </link>
+  <link name="arm1_lower_forearm_link">
+    <visual>
+      <origin rpy="3.141593 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_5_lower_forearm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="3.141593 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_5_lower_forearm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="3.141593 0 0" xyz="0.0513477 0.00680462 0" />
+      <mass value="0.414823" />
+      <inertia ixx="0.0001753" ixy="-0.00008528" ixz="0" iyy="0.0005269" iyz="0" izz="0.0005911" />
+    </inertial>
+  </link>
+  <link name="arm1_wrist_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_6_wrist.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_6_wrist.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.046743 -0.0000076652 0.010565" />
+      <mass value="0.115395" />
+      <inertia ixx="0.00004631" ixy="0.0000000195" ixz="0.0000000023" iyy="0.00004514"
+        iyz="0.0000042002" izz="0.0000527" />
+    </inertial>
+  </link>
+  <link name="arm1_gripper_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="-0.02 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_7_gripper.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="-0.02 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_7_gripper.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.023001 0 0.011523" />
+      <mass value="0.097666" />
+      <inertia ixx="0.00003268" iyy="0.00002436" izz="0.00002119" ixy="0" ixz="0" iyz="0.0000002785" />
+    </inertial>
+  </link>
+  <link name="arm1_ee_arm_link">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <link name="arm1_gripper_prop_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="-0.0685 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_8_gripper_prop.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="-0.0685 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_8_gripper_prop.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.002378 0.0000000285 0" />
+      <mass value="0.008009" />
+      <inertia ixx="0.0000020386" iyy="0.0000042979" izz="0.0000023796" ixy="0" ixz="0.0000006559"
+        iyz="0" />
+    </inertial>
+  </link>
+  <link name="arm1_gripper_bar_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="-0.063 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_9_gripper_bar.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="-0.063 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_9_gripper_bar.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.006794 -0.0000004272 -0.000776" />
+      <mass value="0.150986" />
+      <inertia ixx="0.00007895" iyy="0.0003283" izz="0.0003095" ixy="-0.0000000012"
+        ixz="0.0000001341" iyz="0.0000017465" />
+    </inertial>
+  </link>
+  <link name="arm1_fingers_link">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <link name="arm1_left_finger_link">
+    <visual>
+      <origin rpy="1.570796 -3.141593 1.570796" xyz="-0.0404 -0.0575 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_10_gripper_finger.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="1.570796 -3.141593 1.570796" xyz="-0.0404 -0.0575 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_10_gripper_finger.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="3.141593 3.141593 1.570796" xyz="0.017344 -0.0060692 0" />
+      <mass value="0.034796" />
+      <inertia ixx="0.00002433" ixy="-0.0000024004" ixz="0" iyy="0.00001255" iyz="0"
+        izz="0.00001417" />
+    </inertial>
+  </link>
+  <link name="arm1_right_finger_link">
+    <visual>
+      <origin rpy="-1.570796 3.141593 -1.570796" xyz="-0.0404 0.0575 0 " />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_10_gripper_finger.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="-1.570796 3.141593 -1.570796" xyz="-0.0404 0.0575 0 " />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_10_gripper_finger.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 3.141593 1.570796" xyz="0.017344 0.0060692 0" />
+      <mass value="0.034796" />
+      <inertia ixx="0.00002433" ixy="0.0000024001" ixz="0" iyy="0.00001255" iyz="0" izz="0.00001417" />
+    </inertial>
+  </link>
+  <link name="arm1_ee_gripper_link">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+
+  <!-- Joint connecting world to Arm 1 Base -->
+  <joint name="world_to_arm1_base" type="fixed">
+    <parent link="world" />
+    <child link="arm1_base_link" />
+    <origin xyz="0 0.4 0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Arm 1 Joints -->
+  <joint name="arm1_waist" type="revolute">
+    <axis xyz="0 0 1" />
+    <limit effort="10" lower="-3.14158" upper="3.14158" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0 0 0.079" />
+    <parent link="arm1_base_link" />
+    <child link="arm1_shoulder_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm1_shoulder" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="20" lower="-1.85005" upper="1.25664" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0 0 0.04805" />
+    <parent link="arm1_shoulder_link" />
+    <child link="arm1_upper_arm_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm1_elbow" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-1.76278" upper="1.60570" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.05955 0 0.3" />
+    <parent link="arm1_upper_arm_link" />
+    <child link="arm1_upper_forearm_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm1_forearm_roll" type="revolute">
+    <axis xyz="1 0 0" />
+    <limit effort="2" lower="-3.14158" upper="3.14158" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.2 0 0" />
+    <parent link="arm1_upper_forearm_link" />
+    <child link="arm1_lower_forearm_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm1_wrist_angle" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="5" lower="-1.86750" upper="2.23402" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.1 0 0" />
+    <parent link="arm1_lower_forearm_link" />
+    <child link="arm1_wrist_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm1_wrist_rotate" type="revolute">
+    <axis xyz="1 0 0" />
+    <limit effort="1" lower="-3.14158" upper="3.14158" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.069744 0 0" />
+    <parent link="arm1_wrist_link" />
+    <child link="arm1_gripper_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm1_ee_arm" type="fixed">
+    <axis xyz="1 0 0" />
+    <origin rpy="0 0 0" xyz="0.042825 0 0" />
+    <parent link="arm1_gripper_link" />
+    <child link="arm1_ee_arm_link" />
+  </joint>
+  <joint name="arm1_gripper" type="continuous">
+    <axis xyz="1 0 0" />
+    <limit effort="1" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.005675 0 0" />
+    <parent link="arm1_ee_arm_link" />
+    <child link="arm1_gripper_prop_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm1_gripper_bar" type="fixed">
+    <axis xyz="1 0 0" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="arm1_ee_arm_link" />
+    <child link="arm1_gripper_bar_link" />
+  </joint>
+  <joint name="arm1_ee_bar" type="fixed">
+    <axis xyz="1 0 0" />
+    <origin rpy="0 0 0" xyz="0.025875 0 0" />
+    <parent link="arm1_gripper_bar_link" />
+    <child link="arm1_fingers_link" />
+  </joint>
+  <joint name="arm1_left_finger" type="prismatic">
+    <axis xyz="0 1 0" />
+    <limit effort="5" lower="0.021" upper="0.057" velocity="1" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="arm1_fingers_link" />
+    <child link="arm1_left_finger_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm1_right_finger" type="prismatic">
+    <axis xyz="0 1 0" />
+    <limit effort="5" lower="-0.057" upper="-0.021" velocity="1" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="arm1_fingers_link" />
+    <child link="arm1_right_finger_link" />
+    <dynamics friction="0.1" />
+    <mimic joint="arm1_left_finger" multiplier="-1" offset="0" />
+  </joint>
+  <joint name="arm1_ee_gripper" type="fixed">
+    <axis xyz="1 0 0" />
+    <origin rpy="0 0 0" xyz="0.0385 0 0" />
+    <parent link="arm1_fingers_link" />
+    <child link="arm1_ee_gripper_link" />
+  </joint>
+
+
+  <!-- ************************* -->
+  <!-- ******   ARM 2   ****** -->
+  <!-- ************************* -->
+
+  <link name="arm2_base_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_1_base.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_1_base.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="-0.0534774 -0.000562575 0.0205961" />
+      <mass value="0.969034" />
+      <inertia ixx="0.006024" iyy="0.0017" izz="0.007162" ixy="0.00004713" ixz="0.000003851"
+        iyz="-0.00008415" />
+    </inertial>
+  </link>
+  <link name="arm2_shoulder_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="0 0 -0.003" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_2_shoulder.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="0 0 -0.003" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_2_shoulder.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.000259233 -0.0000033552 0.0116129" />
+      <mass value="0.798614" />
+      <inertia ixx="0.0009388" iyy="0.001138" izz="0.001201" ixy="-0.000000001" ixz="-0.0000000191"
+        iyz="0.0000059568" />
+    </inertial>
+  </link>
+  <link name="arm2_upper_arm_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_3_upper_arm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_3_upper_arm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.0206949 0.0000000004 0.226459" />
+      <mass value="0.792592" />
+      <inertia ixx="0.008925" iyy="0.008937" izz="0.0009357" ixy="0" ixz="0" iyz="0.001201" />
+    </inertial>
+  </link>
+  <link name="arm2_upper_forearm_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_4_upper_forearm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_4_upper_forearm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.105723 0 0" />
+      <mass value="0.322228" />
+      <inertia ixx="0.0001524" ixy="-0.00001883" ixz="-0.0000084064" iyy="0.001342"
+        iyz="0.0000012564" izz="0.001441" />
+    </inertial>
+  </link>
+  <link name="arm2_lower_forearm_link">
+    <visual>
+      <origin rpy="3.141593 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_5_lower_forearm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="3.141593 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_5_lower_forearm.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="3.141593 0 0" xyz="0.0513477 0.00680462 0" />
+      <mass value="0.414823" />
+      <inertia ixx="0.0001753" ixy="-0.00008528" ixz="0" iyy="0.0005269" iyz="0" izz="0.0005911" />
+    </inertial>
+  </link>
+  <link name="arm2_wrist_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_6_wrist.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="0 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_6_wrist.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.046743 -0.0000076652 0.010565" />
+      <mass value="0.115395" />
+      <inertia ixx="0.00004631" ixy="0.0000000195" ixz="0.0000000023" iyy="0.00004514"
+        iyz="0.0000042002" izz="0.0000527" />
+    </inertial>
+  </link>
+  <link name="arm2_gripper_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="-0.02 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_7_gripper.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="-0.02 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_7_gripper.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.023001 0 0.011523" />
+      <mass value="0.097666" />
+      <inertia ixx="0.00003268" iyy="0.00002436" izz="0.00002119" ixy="0" ixz="0" iyz="0.0000002785" />
+    </inertial>
+  </link>
+  <link name="arm2_ee_arm_link">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <link name="arm2_gripper_prop_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="-0.0685 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_8_gripper_prop.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="-0.0685 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_8_gripper_prop.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.002378 0.0000000285 0" />
+      <mass value="0.008009" />
+      <inertia ixx="0.0000020386" iyy="0.0000042979" izz="0.0000023796" ixy="0" ixz="0.0000006559"
+        iyz="0" />
+    </inertial>
+  </link>
+  <link name="arm2_gripper_bar_link">
+    <visual>
+      <origin rpy="0 0 1.570796" xyz="-0.063 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_9_gripper_bar.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.570796" xyz="-0.063 0 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_9_gripper_bar.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 1.570796" xyz="0.006794 -0.0000004272 -0.000776" />
+      <mass value="0.150986" />
+      <inertia ixx="0.00007895" iyy="0.0003283" izz="0.0003095" ixy="-0.0000000012"
+        ixz="0.0000001341" iyz="0.0000017465" />
+    </inertial>
+  </link>
+  <link name="arm2_fingers_link">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <link name="arm2_left_finger_link">
+    <visual>
+      <origin rpy="1.570796 -3.141593 1.570796" xyz="-0.0404 -0.0575 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_10_gripper_finger.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="1.570796 -3.141593 1.570796" xyz="-0.0404 -0.0575 0" />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_10_gripper_finger.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="3.141593 3.141593 1.570796" xyz="0.017344 -0.0060692 0" />
+      <mass value="0.034796" />
+      <inertia ixx="0.00002433" ixy="-0.0000024004" ixz="0" iyy="0.00001255" iyz="0"
+        izz="0.00001417" />
+    </inertial>
+  </link>
+  <link name="arm2_right_finger_link">
+    <visual>
+      <origin rpy="-1.570796 3.141593 -1.570796" xyz="-0.0404 0.0575 0 " />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_10_gripper_finger.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="interbotix_black" />
+    </visual>
+    <collision>
+      <origin rpy="-1.570796 3.141593 -1.570796" xyz="-0.0404 0.0575 0 " />
+      <geometry>
+        <mesh
+          filename="https://coscene-artifacts-production.oss-cn-hangzhou.aliyuncs.com/interbotix_xsarm_descriptions/meshes/vx300s_meshes/vx300s_10_gripper_finger.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 3.141593 1.570796" xyz="0.017344 0.0060692 0" />
+      <mass value="0.034796" />
+      <inertia ixx="0.00002433" ixy="0.0000024001" ixz="0" iyy="0.00001255" iyz="0" izz="0.00001417" />
+    </inertial>
+  </link>
+  <link name="arm2_ee_gripper_link">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+
+  <!-- Joint connecting world to Arm 2 Base -->
+  <joint name="world_to_arm2_base" type="fixed">
+    <parent link="world" />
+    <child link="arm2_base_link" />
+    <origin xyz="0 -0.4 0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Arm 2 Joints -->
+  <joint name="arm2_waist" type="revolute">
+    <axis xyz="0 0 1" />
+    <limit effort="10" lower="-3.14158" upper="3.14158" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0 0 0.079" />
+    <parent link="arm2_base_link" />
+    <child link="arm2_shoulder_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm2_shoulder" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="20" lower="-1.85005" upper="1.25664" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0 0 0.04805" />
+    <parent link="arm2_shoulder_link" />
+    <child link="arm2_upper_arm_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm2_elbow" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="15" lower="-1.76278" upper="1.60570" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.05955 0 0.3" />
+    <parent link="arm2_upper_arm_link" />
+    <child link="arm2_upper_forearm_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm2_forearm_roll" type="revolute">
+    <axis xyz="1 0 0" />
+    <limit effort="2" lower="-3.14158" upper="3.14158" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.2 0 0" />
+    <parent link="arm2_upper_forearm_link" />
+    <child link="arm2_lower_forearm_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm2_wrist_angle" type="revolute">
+    <axis xyz="0 1 0" />
+    <limit effort="5" lower="-1.86750" upper="2.23402" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.1 0 0" />
+    <parent link="arm2_lower_forearm_link" />
+    <child link="arm2_wrist_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm2_wrist_rotate" type="revolute">
+    <axis xyz="1 0 0" />
+    <limit effort="1" lower="-3.14158" upper="3.14158" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.069744 0 0" />
+    <parent link="arm2_wrist_link" />
+    <child link="arm2_gripper_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm2_ee_arm" type="fixed">
+    <axis xyz="1 0 0" />
+    <origin rpy="0 0 0" xyz="0.042825 0 0" />
+    <parent link="arm2_gripper_link" />
+    <child link="arm2_ee_arm_link" />
+  </joint>
+  <joint name="arm2_gripper" type="continuous">
+    <axis xyz="1 0 0" />
+    <limit effort="1" velocity="3.14159" />
+    <origin rpy="0 0 0" xyz="0.005675 0 0" />
+    <parent link="arm2_ee_arm_link" />
+    <child link="arm2_gripper_prop_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm2_gripper_bar" type="fixed">
+    <axis xyz="1 0 0" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="arm2_ee_arm_link" />
+    <child link="arm2_gripper_bar_link" />
+  </joint>
+  <joint name="arm2_ee_bar" type="fixed">
+    <axis xyz="1 0 0" />
+    <origin rpy="0 0 0" xyz="0.025875 0 0" />
+    <parent link="arm2_gripper_bar_link" />
+    <child link="arm2_fingers_link" />
+  </joint>
+  <joint name="arm2_left_finger" type="prismatic">
+    <axis xyz="0 1 0" />
+    <limit effort="5" lower="0.021" upper="0.057" velocity="1" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="arm2_fingers_link" />
+    <child link="arm2_left_finger_link" />
+    <dynamics friction="0.1" />
+  </joint>
+  <joint name="arm2_right_finger" type="prismatic">
+    <axis xyz="0 1 0" />
+    <limit effort="5" lower="-0.057" upper="-0.021" velocity="1" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="arm2_fingers_link" />
+    <child link="arm2_right_finger_link" />
+    <dynamics friction="0.1" />
+    <mimic joint="arm2_left_finger" multiplier="-1" offset="0" />
+  </joint>
+  <joint name="arm2_ee_gripper" type="fixed">
+    <axis xyz="1 0 0" />
+    <origin rpy="0 0 0" xyz="0.0385 0 0" />
+    <parent link="arm2_fingers_link" />
+    <child link="arm2_ee_gripper_link" />
+  </joint>
+
+</robot>

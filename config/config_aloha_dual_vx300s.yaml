@@ -1,0 +1,93 @@
+# config_aloha_dual_vx300s.yaml
+# Configuration for ALOHA HDF5 dataset with dual_vx300s.urdf
+
+# Global sampling rate (Hz) - default for all datasets
+sampling_rate: 20.0
+
+joint_states:
+  hdf5_paths:
+    position: "/observations/qpos"
+    velocity: "/observations/qvel" # Optional
+    effort: "/observations/effort" # Optional
+  mcap_topic: "/joint_states"
+  # sampling_rate: 20.0  # Optional: override global sampling rate for joint states
+
+  # Mapping from URDF joint names (from dual_vx300s.urdf)
+  # to HDF5 column indices (0-based)
+  # Assuming ALOHA HDF5: cols 0-5 = arm1 DoF, col 6 = arm1 gripper
+  #                         cols 7-12= arm2 DoF, col 13= arm2 gripper
+  joint_mappings:
+    # Arm 1 - Map URDF names to HDF5 qpos/qvel columns 0-5
+    "arm1_waist": 0
+    "arm1_shoulder": 1
+    "arm1_elbow": 2
+    "arm1_forearm_roll": 3
+    "arm1_wrist_angle": 4
+    "arm1_wrist_rotate": 5
+    # Arm 2 - Map URDF names to HDF5 qpos/qvel columns 7-12
+    "arm2_waist": 7
+    "arm2_shoulder": 8
+    "arm2_elbow": 9
+    "arm2_forearm_roll": 10
+    "arm2_wrist_angle": 11
+    "arm2_wrist_rotate": 12
+
+cameras:
+  # Update topics and frame_ids based on your dual_vx300s.urdf
+  - hdf5_path: "/observations/images/cam_high"
+    mcap_topic: "/camera/high/image_compressed"
+    frame_id: "world" # Or a central base link
+    format: "jpeg"
+    # sampling_rate: 20.0  # Optional: override global sampling rate for this camera
+  - hdf5_path: "/observations/images/cam_left_wrist"
+    mcap_topic: "/camera/arm1_wrist/image_compressed"
+    frame_id: "arm1_ee_gripper_link" # Example end-effector frame
+    format: "jpeg"
+    # sampling_rate: 20.0  # Optional: override global sampling rate for this camera
+  - hdf5_path: "/observations/images/cam_right_wrist"
+    mcap_topic: "/camera/arm2_wrist/image_compressed"
+    frame_id: "arm2_ee_gripper_link" # Example end-effector frame
+    format: "jpeg"
+    # sampling_rate: 20.0  # Optional: override global sampling rate for this camera
+
+# Gripper configurations - Prismatic vx300s gripper (left_finger controls right via mimic)
+# Map HDF5 data (assumed 0=closed, 1=open) to URDF limits (0.021=closed, 0.057=open)
+gripper:
+  - # Gripper for Arm 1
+    hdf5_path: "/observations/qpos"
+    hdf5_index: 6 # Column index for arm 1 gripper value
+    urdf_joint_name: "arm1_left_finger" # URDF prismatic joint name
+    value_type: "normalized"
+    output_min_position: 0.021 # URDF position for 'closed' (input 0.0 maps to this)
+    output_max_position: 0.057 # URDF position for 'open' (input 1.0 maps to this)
+
+  - # Gripper for Arm 2
+    hdf5_path: "/observations/qpos"
+    hdf5_index: 13 # Column index for arm 2 gripper value
+    urdf_joint_name: "arm2_left_finger" # URDF prismatic joint name
+    value_type: "normalized"
+    output_min_position: 0.021
+    output_max_position: 0.057
+
+# Custom topics for ALOHA-specific data
+custom_topics:
+  - mcap_topic: "/action"
+    hdf5_path: "/action"
+    script_path: "custom_extractors/aloha_action_handler.py"
+    handler_function: "extract_to_mcap"
+    message_type: "std_msgs/msg/Float64MultiArray"
+    description: "Robot action commands for dual arm system"
+    
+  - mcap_topic: "/base_action"
+    hdf5_path: "/base_action"
+    script_path: "custom_extractors/aloha_base_action_handler.py"
+    handler_function: "extract_to_mcap"
+    message_type: "std_msgs/msg/Float64MultiArray"
+    description: "Base movement commands [linear_velocity, angular_velocity]"
+    
+  - mcap_topic: "/compress_len"
+    hdf5_path: "/compress_len"
+    script_path: "custom_extractors/aloha_compress_len_handler.py"
+    handler_function: "extract_to_mcap"
+    message_type: "std_msgs/msg/Float64MultiArray"
+    description: "Compression length values for data processing"

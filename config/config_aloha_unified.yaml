@@ -1,0 +1,117 @@
+# config_aloha_unified.yaml
+# Unified configuration for bidirectional ALOHA HDF5 ↔ MCAP conversion
+# This single configuration file works for both conversion directions
+
+# Global sampling rate (Hz) - default for all datasets
+sampling_rate: 20.0
+
+joint_states:
+  hdf5_paths:
+    position: "/observations/qpos"
+    velocity: "/observations/qvel" # Optional
+    effort: "/observations/effort" # Optional
+  mcap_topic: "/joint_states"
+  # sampling_rate: 20.0  # Optional: override global sampling rate for joint states
+
+  # Unified joint mapping: URDF joint name → HDF5 column index
+  # Works for both conversion directions
+  joint_mappings:
+    # Arm 1 - Map URDF names to HDF5 qpos/qvel columns 0-5
+    "arm1_waist": 0
+    "arm1_shoulder": 1
+    "arm1_elbow": 2
+    "arm1_forearm_roll": 3
+    "arm1_wrist_angle": 4
+    "arm1_wrist_rotate": 5
+    # Arm 2 - Map URDF names to HDF5 qpos/qvel columns 7-12
+    "arm2_waist": 7
+    "arm2_shoulder": 8
+    "arm2_elbow": 9
+    "arm2_forearm_roll": 10
+    "arm2_wrist_angle": 11
+    "arm2_wrist_rotate": 12
+
+  # Optional: Explicit joint order for HDF5 output
+  # If not specified, derived automatically from joint_mappings
+  # joint_order:
+  #   - "arm1_waist"
+  #   - "arm1_shoulder"
+  #   - "arm1_elbow"
+  #   - "arm1_forearm_roll"
+  #   - "arm1_wrist_angle"
+  #   - "arm1_wrist_rotate"
+  #   - "arm1_left_finger"
+  #   - "arm2_waist"
+  #   - "arm2_shoulder"
+  #   - "arm2_elbow"
+  #   - "arm2_forearm_roll"
+  #   - "arm2_wrist_angle"
+  #   - "arm2_wrist_rotate"
+  #   - "arm2_left_finger"
+
+cameras:
+  - hdf5_path: "/observations/images/cam_high"
+    mcap_topic: "/camera/high/image_compressed"
+    frame_id: "world" # Used for HDF5→MCAP, ignored for MCAP→HDF5
+    format: "jpeg"
+    # sampling_rate: 20.0  # Optional: override global sampling rate
+  - hdf5_path: "/observations/images/cam_left_wrist"
+    mcap_topic: "/camera/arm1_wrist/image_compressed"
+    frame_id: "arm1_ee_gripper_link"
+    format: "jpeg"
+  - hdf5_path: "/observations/images/cam_right_wrist"
+    mcap_topic: "/camera/arm2_wrist/image_compressed"
+    frame_id: "arm2_ee_gripper_link"
+    format: "jpeg"
+
+# Unified gripper configurations with bidirectional value mapping
+gripper:
+  - # Gripper for Arm 1
+    urdf_joint_name: "arm1_left_finger"
+    hdf5_path: "/observations/qpos"
+    hdf5_index: 6
+    # Bidirectional value mapping (no "reverse" needed)
+    value_mapping:
+      hdf5_range: [0.0, 1.0]      # HDF5: 0=closed, 1=open
+      urdf_range: [0.021, 0.057]  # URDF: 0.021=closed, 0.057=open
+    description: "Arm 1 gripper mapping from normalized HDF5 to URDF position"
+
+  - # Gripper for Arm 2
+    urdf_joint_name: "arm2_left_finger"
+    hdf5_path: "/observations/qpos"
+    hdf5_index: 13
+    value_mapping:
+      hdf5_range: [0.0, 1.0]
+      urdf_range: [0.021, 0.057]
+    description: "Arm 2 gripper mapping from normalized HDF5 to URDF position"
+
+# Unified custom topics (direction auto-detected)
+custom_topics:
+  - mcap_topic: "/action"
+    hdf5_path: "/action"
+    handler_name: "aloha_action_handler"
+    # No handler_function needed - auto-detected based on conversion direction
+    # No script_path needed - resolved from handler_name and input directory
+    message_type: "std_msgs/msg/Float64MultiArray"
+    description: "Robot action commands for dual arm system"
+    # Custom parameters for this handler (optional)
+    data_scaling: 1.0  # Scale factor applied to action values
+    
+  - mcap_topic: "/base_action"
+    hdf5_path: "/base_action"
+    handler_name: "aloha_base_action_handler"
+    message_type: "std_msgs/msg/Float64MultiArray"
+    description: "Base movement commands [linear_velocity, angular_velocity]"
+    # Custom parameters for this handler (optional)
+    velocity_limit: 2.0  # Maximum velocity magnitude (m/s or rad/s)
+    
+  - mcap_topic: "/compress_len"
+    hdf5_path: "/compress_len"
+    handler_name: "aloha_compress_len_handler"
+    message_type: "std_msgs/msg/Float64MultiArray"
+    description: "Compression length values for data processing"
+    # Custom parameters for this handler (optional)
+    min_compression_length: 0.0  # Minimum allowed compression length
+
+# Optional: TF topic configuration
+# tf_topic: "/tf"

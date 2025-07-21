@@ -1,0 +1,76 @@
+# config_mcap_to_hdf5_aloha.yaml
+# Configuration for converting ALOHA MCAP files back to HDF5 format
+
+# Joint states configuration
+joint_states:
+  mcap_topic: "/joint_states"
+  hdf5_paths:
+    position: "/observations/qpos"
+    velocity: "/observations/qvel"
+    effort: "/observations/effort"
+  
+  # Joint order for HDF5 output (must match original dataset structure)
+  joint_order:
+    - "arm1_waist"
+    - "arm1_shoulder"
+    - "arm1_elbow"
+    - "arm1_forearm_roll"
+    - "arm1_wrist_angle"
+    - "arm1_wrist_rotate"
+    - "arm1_left_finger"
+    - "arm2_waist"
+    - "arm2_shoulder"
+    - "arm2_elbow"
+    - "arm2_forearm_roll"
+    - "arm2_wrist_angle"
+    - "arm2_wrist_rotate"
+    - "arm2_left_finger"
+
+  # Gripper transformations (reverse of HDF5→MCAP)
+  gripper_transformations:
+    - joint_name: "arm1_left_finger"
+      column_index: 6
+      value_type: "reverse_normalized"
+      urdf_min_angle: 0.021
+      urdf_max_angle: 0.057
+      hdf5_min_value: 0.0
+      hdf5_max_value: 1.0
+    - joint_name: "arm2_left_finger"
+      column_index: 13
+      value_type: "reverse_normalized"
+      urdf_min_angle: 0.021
+      urdf_max_angle: 0.057
+      hdf5_min_value: 0.0
+      hdf5_max_value: 1.0
+
+# Camera configurations
+cameras:
+  - mcap_topic: "/camera/high/image_compressed"
+    hdf5_path: "/observations/images/cam_high"
+    format: "compressed"
+  - mcap_topic: "/camera/arm1_wrist/image_compressed"
+    hdf5_path: "/observations/images/cam_left_wrist"
+    format: "compressed"
+  - mcap_topic: "/camera/arm2_wrist/image_compressed"
+    hdf5_path: "/observations/images/cam_right_wrist"
+    format: "compressed"
+
+# Custom topics for ALOHA-specific data
+custom_topics:
+  - mcap_topic: "/action"
+    hdf5_path: "/action"
+    script_path: "custom_extractors/aloha_action_handler.py"
+    handler_function: "extract_to_hdf5"
+    description: "Robot action commands for dual arm system"
+    
+  - mcap_topic: "/base_action"
+    hdf5_path: "/base_action"
+    script_path: "custom_extractors/aloha_base_action_handler.py"
+    handler_function: "extract_to_hdf5"
+    description: "Base movement commands [linear_velocity, angular_velocity]"
+    
+  - mcap_topic: "/compress_len"
+    hdf5_path: "/compress_len"
+    script_path: "custom_extractors/aloha_compress_len_handler.py"
+    handler_function: "extract_to_hdf5"
+    description: "Compression length values for data processing"
