@@ -27,6 +27,13 @@ import importlib.util
 from typing import Optional, Callable, List, Dict, Any
 from config_utils import load_unified_config, UnifiedConfig, ConfigurationError
 
+# Exit codes for different error types
+EXIT_SUCCESS = 0
+EXIT_CONFIG_ERROR = 1      # Configuration file errors
+EXIT_VALIDATION_ERROR = 2  # Data validation errors (missing datasets, invalid values)
+EXIT_IO_ERROR = 3          # File I/O errors (can't write output, etc.)
+EXIT_RUNTIME_ERROR = 4     # Other runtime errors
+
 # Parse arguments
 parser = argparse.ArgumentParser(description='Convert HDF5 and URDF files to MCAP')
 parser.add_argument('--hdf5-file', type=str, required=True, help='Path to HDF5 file (inside container, e.g., /mnt/input.hdf5)')
@@ -760,24 +767,24 @@ def convert_hdf5_to_mcap():
             print("---------------------")
     except ConfigurationError as e:
         print(f"Configuration error: {e}")
-        return
+        sys.exit(EXIT_CONFIG_ERROR)
     except Exception as e:
         print(f"An unexpected error occurred while loading config: {e}")
-        return
+        sys.exit(EXIT_RUNTIME_ERROR)
 
     # Validate basic config structure
     if 'joint_states' not in config or 'hdf5_paths' not in config['joint_states'] or 'position' not in config['joint_states']['hdf5_paths']:
         print("ERROR: Config missing required 'joint_states.hdf5_paths.position'")
-        return
+        sys.exit(EXIT_VALIDATION_ERROR)
     if 'cameras' not in config:
         print("Warning: No 'cameras' section found in config. No image data will be processed.")
         config['cameras'] = [] # Ensure cameras list exists even if empty
     if 'joint_mappings' not in config['joint_states']:
         print("ERROR: Config missing required 'joint_states.joint_mappings' for explicit mapping.")
-        return
+        sys.exit(EXIT_VALIDATION_ERROR)
     if 'gripper' in config and not isinstance(config['gripper'], list):
          print("ERROR: 'gripper' section must be a list of configurations.")
-         return
+         sys.exit(EXIT_VALIDATION_ERROR)
 
     # Validate and set sampling rates
     global_sampling_rate = config.get('sampling_rate', 20.0)  # Default 20 Hz
@@ -790,10 +797,10 @@ def convert_hdf5_to_mcap():
     # Validate sampling rates are positive
     if global_sampling_rate <= 0:
         print("ERROR: Global sampling rate must be positive")
-        return
+        sys.exit(EXIT_VALIDATION_ERROR)
     if joint_states_sampling_rate <= 0:
         print("ERROR: Joint states sampling rate must be positive")
-        return
+        sys.exit(EXIT_VALIDATION_ERROR)
 
     # Parse URDF to get joint information
     joints = parse_urdf(args.urdf_file)
@@ -825,7 +832,7 @@ def convert_hdf5_to_mcap():
         joint_pos_path = config['joint_states']['hdf5_paths']['position']
         if joint_pos_path not in f:
             print(f"ERROR: Joint position dataset '{joint_pos_path}' not found. Cannot proceed.")
-            return
+            sys.exit(EXIT_VALIDATION_ERROR)
 
         joint_states_frames = f[joint_pos_path].shape[0]
         joint_states_duration = joint_states_frames / joint_states_sampling_rate
@@ -896,7 +903,7 @@ def convert_hdf5_to_mcap():
             print(f"  Loaded raw position data from '{pos_path}' with shape {hdf5_pos_data.shape}")
         else:
             print(f"ERROR: Position dataset '{pos_path}' not found. Cannot proceed.")
-            return
+            sys.exit(EXIT_VALIDATION_ERROR)
 
         hdf5_vel_data = None
         if vel_path and vel_path in f:
@@ -1596,9 +1603,13 @@ def convert_hdf5_to_mcap():
                 if os.path.exists(args.output_file):
                     file_size = os.path.getsize(args.output_file)
                     if file_size == 0:
-                        print(f"WARNING: File exists but has zero size!")
+                        print(f"ERROR: Output file exists but has zero size!")
+                        sys.exit(EXIT_IO_ERROR)
+                    else:
+                        print(f"Successfully created MCAP file with size: {file_size} bytes")
                 else:
                     print(f"ERROR: Output file does not exist after writing: {args.output_file}")
+                    sys.exit(EXIT_IO_ERROR)
             except Exception as e:
                 print(f"ERROR: Failed to finish/flush MCAP writer: {e}")
                 if args.debug:
@@ -1630,5 +1641,6 @@ if __name__ == "__main__":
         print(f"Error during conversion: {e}")
         if args.debug:
             traceback.print_exc()
+        sys.exit(EXIT_RUNTIME_ERROR)
     finally:
         rclpy.shutdown()

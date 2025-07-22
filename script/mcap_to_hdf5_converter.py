@@ -25,6 +25,13 @@ from io import BytesIO
 from PIL import Image as PILImage
 from config_utils import load_unified_config, UnifiedConfig, ConfigurationError
 
+# Exit codes for different error types
+EXIT_SUCCESS = 0
+EXIT_CONFIG_ERROR = 1      # Configuration file errors
+EXIT_VALIDATION_ERROR = 2  # Data validation errors (missing datasets, invalid values)
+EXIT_IO_ERROR = 3          # File I/O errors (can't read input, write output, etc.)
+EXIT_RUNTIME_ERROR = 4     # Other runtime errors
+
 # Parse arguments
 parser = argparse.ArgumentParser(description='Convert MCAP files to HDF5 format')
 parser.add_argument('--mcap-file', type=str, required=True, help='Path to input MCAP file')
@@ -639,10 +646,10 @@ def convert_mcap_to_hdf5():
             print("---------------------")
     except ConfigurationError as e:
         print(f"Configuration error: {e}")
-        return
+        sys.exit(EXIT_CONFIG_ERROR)
     except Exception as e:
         print(f"An unexpected error occurred while loading config: {e}")
-        return
+        sys.exit(EXIT_RUNTIME_ERROR)
 
     # Read MCAP file and collect messages by topic
     topic_messages = {}
@@ -695,7 +702,7 @@ def convert_mcap_to_hdf5():
         print(f"Error reading MCAP file: {e}")
         if args.debug:
             traceback.print_exc()
-        return
+        sys.exit(EXIT_IO_ERROR)
 
     print(f"Found {len(topic_messages)} topics with messages:")
     for topic, messages in topic_messages.items():
@@ -785,11 +792,23 @@ def convert_mcap_to_hdf5():
 
         print(f"Successfully wrote HDF5 file: {args.hdf5_file}")
 
+        # Verify file exists and has size
+        if os.path.exists(args.hdf5_file):
+            file_size = os.path.getsize(args.hdf5_file)
+            if file_size == 0:
+                print(f"ERROR: Output file exists but has zero size!")
+                sys.exit(EXIT_IO_ERROR)
+            else:
+                print(f"Successfully created HDF5 file with size: {file_size} bytes")
+        else:
+            print(f"ERROR: Output file does not exist after writing: {args.hdf5_file}")
+            sys.exit(EXIT_IO_ERROR)
+
     except Exception as e:
         print(f"Error writing HDF5 file: {e}")
         if args.debug:
             traceback.print_exc()
-        return
+        sys.exit(EXIT_IO_ERROR)
 
 if __name__ == "__main__":
     try:
@@ -798,5 +817,6 @@ if __name__ == "__main__":
         print(f"Error during conversion: {e}")
         if args.debug:
             traceback.print_exc()
+        sys.exit(EXIT_RUNTIME_ERROR)
     finally:
         rclpy.shutdown()
